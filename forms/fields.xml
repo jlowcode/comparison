@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<form>
+	<fields addfieldpath="/administrator/components/com_fabrik/models/fields" name="params">
+		<fieldset name="plg-list-comparison">
+		
+			<field type="helplink"
+				url="PLG_LIST_COMPARISON_HELP_SERVER" />
+
+			<field name="comparison_access"
+				type="accesslevel"
+				default="1"
+				label="PLG_FABRIK_LIST_COMPARISON_ACCESS_LABEL"
+				repeat="true" />
+
+			<field name="main_column"
+				   label="PLG_FABRIK_LIST_COMPARISON_MAIN_COLUMN"
+				   description="PLG_FABRIK_LIST_COMPARISON_MAIN_COLUMN_DESC"
+				   size="30"
+				   type="listfields"
+			/>
+
+			<field name="thumb_column"
+				   label="PLG_FABRIK_LIST_COMPARISON_THUMB_COLUMN"
+				   description="PLG_FABRIK_LIST_COMPARISON_THUMB_COLUMN_DESC"
+				   size="30"
+				   type="listfields"
+			/>
+			
+			<field name="list_comparison_columns"
+			       type="fabrikmodalrepeat"
+			       icon="list"
+			       label="PLG_FABRIK_LIST_COMPARISON_ELEMENTS_LABEL"
+			       description="PLG_FABRIK_LIST_COMPARISON_ELEMENTS_DESC"
+			>
+				<fields name="params">
+					<fieldset modal="true"
+						name="list_comparison_columns_modal"
+						repeat="false">
+						<field name="comparison_columns"
+							label="PLG_FABRIK_LIST_COMPARISON_LABEL"
+							description="PLG_FABRIK_LIST_COMPARISON_LABEL_DESC"
+							size="30"
+							type="listfields"
+						/>
+					</fieldset>
+				</fields>
+			</field>
+				
+		</fieldset>
+	</fields>
+</form>
