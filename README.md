@@ -2,6 +2,10 @@
 
 É um plugin que realiza uma função bastante comum em sites de revisão/comparação de produtos, que é mostrar os produtos em uma tabela que permite comparar seus atributos. Também permitindo ao usuário fechar a comparação a qualquer momento e voltar para a listagem.
 
+### Conteúdo
+- [Configuração](#configuração)
+  - [Adds a button to the list, allowing elements comparison](#adds-a-button-to-the-list-allowing-elements-comparison)
+
 ## Configuração
 
 Para utilizar este plugin acesse **Components > Fabrik > Lists > (entre na lista que deseja adicionar o plugin)**. Selecione a opção "Plug-ins" e adicione um novo plugin a lista clicando em "Add", conforme a imagem abaixo.
