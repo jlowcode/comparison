@@ -1,15 +1,23 @@
 /* The Modal (background) */
 .comparison-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 99;
+    /* Sit on top */
     top: 0;
     left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
 
 /* Modal Header */
@@ -20,7 +28,9 @@
 }
 
 /* Modal Body */
-.comparison-modal-body {padding: 10px 16px;}
+.comparison-modal-body {
+    padding: 10px 16px;
+}
 
 /* Modal Footer */
 .comparison-modal-footer {
@@ -37,15 +47,22 @@
     padding: 0;
     border: 1px solid #888;
     width: 95%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     animation-name: animatetop;
     animation-duration: 0.4s
 }
 
 /* Add Animation */
 @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 /* The Close Button */
@@ -71,6 +88,14 @@
     width: 30%;
 }
 
+/* #input_comparison_autocomplete {
+    width: 20%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+} */
+
 .comparison_autocomplete-items {
     position: absolute;
     width: 29%;
@@ -80,6 +105,7 @@
     z-index: 99;
     left: 69.7%;
 }
+
 .comparison_autocomplete-items div {
     text-align: left;
     padding: 10px;
@@ -87,10 +113,12 @@
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
 }
+
 .comparison_autocomplete-items div:hover {
     /*when hovering an item:*/
     background-color: #e9e9e9;
 }
+
 .comparison_autocomplete-active {
     /*when navigating through the items using the arrow keys:*/
     background-color: DodgerBlue !important;

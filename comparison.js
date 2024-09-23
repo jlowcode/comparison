@@ -1,12 +1,12 @@
 /*! Fabrik */
 
-define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
-    var FbListComparison = new Class ({
-        Extends:FbListPlugin,
+define(["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
+    var FbListComparison = new Class({
+        Extends: FbListPlugin,
         initialize: function (options) {
             this.parent(options);
         },
-        createModal: function() {
+        createModal: function () {
             var modal = document.createElement('div');
             modal.setAttribute('class', 'comparison-modal');
             modal.setAttribute('id', 'comparisonModal');
@@ -32,7 +32,7 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             var input = document.createElement('input');
             input.setAttribute('type', 'text');
             input.setAttribute('id', 'input_comparison_autocomplete');
-            input.setAttribute('placeholder', 'Adicionar');
+            input.setAttribute('placeholder', 'Buscar');
             div_autocomplete.appendChild(input);
             var table_comparison = document.createElement('div');
             table_comparison.setAttribute('id', 'div_table_comparison');
@@ -58,43 +58,37 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             body.appendChild(modal);
             head.appendChild(linkCss);
         },
-        autocomplete: function(inp, arr) {
+        autocomplete: function (inp, arr) {
             var currentFocus, self = this;
 
-            /*execute a function when someone writes in the text field:*/
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value, main_column = self.options.main_column['name'];
-                /*close any already open lists of autocompleted values*/
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
+                var main_column = self.options.main_column; // Agora é uma string
+
                 closeAllLists();
-                if (!val) { return false;}
+                if (!val) { return false; }
                 currentFocus = -1;
 
-                /*create a DIV element that will contain the items (values):*/
                 a = document.createElement("DIV");
                 a.setAttribute("id", this.id + "autocomplete-list");
                 a.setAttribute("class", "comparison_autocomplete-items");
-                /*append the DIV element as a child of the autocomplete container:*/
                 this.parentNode.appendChild(a);
-                /*for each item in the array...*/
+
                 for (i = 0; i < arr.length; i++) {
-                    /*check if the item starts with the same letters as the text field value:*/
                     if (arr[i][main_column].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        /*create a DIV element for each matching element:*/
                         b = document.createElement("DIV");
-                        /*make the matching letters bold:*/
                         b.innerHTML = "<strong>" + arr[i][main_column].substr(0, val.length) + "</strong>";
                         b.innerHTML += arr[i][main_column].substr(val.length);
-                        /*insert a input field that will hold the current array item's value:*/
                         b.innerHTML += "<input type='hidden' value='" + arr[i][main_column] + "'>";
                         b.innerHTML += "<input type='hidden' name='id_value' value='" + arr[i]['id'] + "'>";
-                        /*execute a function when someone clicks on the item value (DIV element):*/
-                        b.addEventListener("click", function(e) {
-                            /*insert the value for the autocomplete text field:*/
+
+                        b.addEventListener("click", function (e) {
                             inp.value = this.getElementsByTagName("input")[0].value;
                             var id_value = this.getElementsByTagName("input")[1].value;
                             self.addColumn(id_value);
-                            /*close the list of autocompleted values,
-                            (or any other open lists of autocompleted values:*/
+                            // Limpa o campo de input
+                            inp.value = ''; // Aqui limpamos o campo após a seleção
+                            // Fecha a lista de autocomplete
                             closeAllLists();
                         });
                         a.appendChild(b);
@@ -102,53 +96,38 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
                 }
             });
 
-            /*execute a function presses a key on the keyboard:*/
-            inp.addEventListener("keydown", function(e) {
+            inp.addEventListener("keydown", function (e) {
                 var x = document.getElementById(this.id + "autocomplete-list");
                 if (x) x = x.getElementsByTagName("div");
                 if (e.keyCode == 40) {
-                    /*If the arrow DOWN key is pressed,
-                    increase the currentFocus variable:*/
                     currentFocus++;
-                    /*and and make the current item more visible:*/
                     addActive(x);
-                } else if (e.keyCode == 38) { //up
-                    /*If the arrow UP key is pressed,
-                    decrease the currentFocus variable:*/
+                } else if (e.keyCode == 38) {
                     currentFocus--;
-                    /*and and make the current item more visible:*/
                     addActive(x);
                 } else if (e.keyCode == 13) {
-                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
                     e.preventDefault();
                     if (currentFocus > -1) {
-                        /*and simulate a click on the "active" item:*/
                         if (x) x[currentFocus].click();
                     }
                 }
             });
 
             function addActive(x) {
-                /*a function to classify an item as "active":*/
                 if (!x) return false;
-                /*start by removing the "active" class on all items:*/
                 removeActive(x);
                 if (currentFocus >= x.length) currentFocus = 0;
                 if (currentFocus < 0) currentFocus = (x.length - 1);
-                /*add class "autocomplete-active":*/
                 x[currentFocus].classList.add("comparison_autocomplete-active");
             }
 
             function removeActive(x) {
-                /*a function to remove the "active" class from all autocomplete items:*/
                 for (var i = 0; i < x.length; i++) {
                     x[i].classList.remove("comparison_autocomplete-active");
                 }
             }
 
             function closeAllLists(elmnt) {
-                /*close all autocomplete lists in the document,
-                except the one passed as an argument:*/
                 var x = document.getElementsByClassName("comparison_autocomplete-items");
                 for (var i = 0; i < x.length; i++) {
                     if (elmnt != x[i] && elmnt != inp) {
@@ -157,12 +136,12 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
                 }
             }
 
-            /*execute a function when someone clicks in the document:*/
             document.addEventListener("click", function (e) {
                 closeAllLists(e.target);
             });
         },
-        watchButton: function() {
+
+        watchButton: function () {
             if (typeOf(this.options.name) === 'null') {
                 return;
             }
@@ -172,7 +151,7 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
 
             document.addEvent('click:relay(input[name^=checkAll])', (e, element) => {
                 var ok = true;
-                document.getElements ('input[name^=ids]').each (function (c) {
+                document.getElements('input[name^=ids]').each(function (c) {
                     if (!c.checked) {
                         ok = false;
                     }
@@ -181,12 +160,12 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
                 var chx = row.getElement('input[name^=checkAll]');
                 if (!ok) {
                     element.set("checked", true);
-                    document.getElements ('input[name^=ids]').set ('checked', true);
+                    document.getElements('input[name^=ids]').set('checked', true);
                 }
                 else {
                     element.set('checked', false);
-                    document.getElements ('input[name=checkAll]').set ('checked', false);
-                    document.getElements ('input[name^=ids]').set ('checked', false);
+                    document.getElements('input[name=checkAll]').set('checked', false);
+                    document.getElements('input[name^=ids]').set('checked', false);
                 }
             });
 
@@ -198,24 +177,24 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
                 e.preventDefault();
                 var row, chx, selected_ids = [];
                 // if the row button is clicked check its associated checkbox
-                if (e.target.getParent ('.fabrik_row')) {
-                    row = e.target.getParent ('.fabrik_row');
-                    if (row.getElement ('input[name^=ids]')) {
-                        chx = row.getElement ('input[name^=ids]');
-                        document.getElements ('input[name^=ids]').set ('checked', false);
-                        chx.set ('checked', true);
+                if (e.target.getParent('.fabrik_row')) {
+                    row = e.target.getParent('.fabrik_row');
+                    if (row.getElement('input[name^=ids]')) {
+                        chx = row.getElement('input[name^=ids]');
+                        document.getElements('input[name^=ids]').set('checked', false);
+                        chx.set('checked', true);
                         jQuery("input[name^=checkAll]").prop("checked", false);
                     }
                 }
                 var ok = false;
-                document.getElements ('input[name^=ids]').each (function (c) {
+                document.getElements('input[name^=ids]').each(function (c) {
                     if (c.checked) {
                         ok = true;
                         selected_ids.push(c.value);
                     }
                 });
                 if (!ok) {
-                    alert (Joomla.JText._ ('COM_FABRIK_PLEASE_SELECT_A_ROW'));
+                    alert(Joomla.JText._('COM_FABRIK_PLEASE_SELECT_A_ROW'));
                     return;
                 }
                 else {
@@ -242,8 +221,8 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             table.appendChild(thead);
 
             var tbody = document.createElement('tbody');
-            var i=0, tr, th;
-            for (i=0; i<columns.length; i++) {
+            var i = 0, tr, th;
+            for (i = 0; i < columns.length; i++) {
                 tr = document.createElement('tr');
                 tr.setAttribute('id', columns[i].name);
                 th = document.createElement('th');
@@ -258,7 +237,7 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
         },
         getIndex: function (array, id) {
             var i, index;
-            for (i=0; i<array.length; i++) {
+            for (i = 0; i < array.length; i++) {
                 if (array[i]['id'] == id) {
                     index = i;
                 }
@@ -269,12 +248,12 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             var columns = this.options.columns;
             var index = this.getIndex(this.options.data_autocomplete, rowId);
             var data = this.options.data_autocomplete[index];
-            var i=0;
+            var i = 0;
             var tr, td;
-            for (i=0; i<columns.length; i++) {
+            for (i = 0; i < columns.length; i++) {
                 tr = document.getElementById(columns[i].name);
                 td = document.createElement('td');
-                td.setAttribute('class', 'row_'+ rowId);
+                td.setAttribute('class', 'row_' + rowId);
                 td.innerHTML = data[columns[i].name];
                 tr.appendChild(td);
             }
@@ -310,12 +289,12 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
 
             var span = document.getElementsByClassName("comparison-modal-close")[0];
 
-            span.onclick = function() {
+            span.onclick = function () {
                 modal.style.display = "none";
                 body.style.overflowY = "auto";
             };
 
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                     body.style.overflowY = "auto";
@@ -343,7 +322,7 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             this.options.data_autocomplete = this.options.data;
             this.options.data_used = [];
 
-            for (i=0; i<selected_ids.length; i++) {
+            for (i = 0; i < selected_ids.length; i++) {
                 this.addColumn(selected_ids[i]);
             }
         },
@@ -357,12 +336,12 @@ define (["jquery", "fab/list-plugin"], function (jQuery, FbListPlugin) {
             var path_css = this.options.url + 'plugins/fabrik_list/comparison/lib/lightbox/css/lightbox.css',
                 path_js = this.options.url + 'plugins/fabrik_list/comparison/lib/lightbox/js/lightbox.js';
 
-            for (var i=0; i<li.length; i++) {
+            for (var i = 0; i < li.length; i++) {
                 if (li[i].getAttribute('href') === path_css) {
                     existsCss = true;
                 }
             }
-            for (i=0; i<sc.length; i++) {
+            for (i = 0; i < sc.length; i++) {
                 if (sc[i].getAttribute('src') === path_js) {
                     existsScript = true;
                 }

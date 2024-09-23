@@ -27,7 +27,7 @@ class PlgFabrik_ListComparison extends PlgFabrik_List
     protected $buttonPrefix = 'comparison';
     protected $msg = null;
     protected $hasThumb = false;
-    protected $main_column;
+    protected $main_column = 'titulo';
 
     public function button(&$args)
     {
@@ -353,16 +353,17 @@ class PlgFabrik_ListComparison extends PlgFabrik_List
 
     public function onLoadJavascriptInstance($args)
     {
+
         parent::onLoadJavascriptInstance($args);
 
         $opts = $this->getElementJSOptions();
+
         $opts->url_site = COM_FABRIK_LIVESITE;
         $opts->table = $this->getModel()->getTable()->db_table_name;
         $opts->columns = $this->getColumnsComparison();
         $opts->main_column = $this->main_column;
         $opts->data = $this->getRowsData();
         $opts->url = COM_FABRIK_LIVESITE;
-
         $this->jsInstance = "new FbListComparison(" . json_encode($opts) . ")";
         return true;
     }
